@@ -1,840 +1,0 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.8;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background-color: #f9f9f9;
-        }
-        p {
-            margin-bottom: 1em;
-            text-align: justify;
-        }
-        @media (max-width: 600px) {
-            body {
-                padding: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <p>&lt;!DOCTYPE html&gt;</p>
-    <p>&lt;html lang=&quot;zh-CN&quot;&gt;</p>
-    <p>&lt;head&gt;</p>
-    <p>    &lt;meta charset=&quot;UTF-8&quot;&gt;</p>
-    <p>    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</p>
-    <p>    &lt;title&gt;ElectroDemocracy Token (EDT)&lt;/title&gt;</p>
-    <p>    &lt;script src=&quot;https://cdn.tailwindcss.com&quot;&gt;&lt;/script&gt;</p>
-    <p>    &lt;script type=&quot;module&quot;&gt;</p>
-    <p>        import { GoogleGenerativeAI } from &quot;https://esm.run/@google/generative-ai&quot;;</p>
-    <br>
-    <p>        // Gemini API Configuration</p>
-    <p>        // IMPORTANT: Replace with your actual Gemini API Key before deploying!</p>
-    <p>        const apiKey = &quot;&quot;; // 在此处填入您的 API Key，例如 &quot;AIzaSy...&quot;</p>
-    <br>
-    <p>        let genAI, model;</p>
-    <p>        if (apiKey) {</p>
-    <p>            genAI = new GoogleGenerativeAI(apiKey);</p>
-    <p>            model = genAI.getGenerativeModel({ model: &quot;gemini-2.5-flash-preview-09-2025&quot; });</p>
-    <p>        }</p>
-    <br>
-    <p>        // --- i18n Translations ---</p>
-    <p>        const translations = {</p>
-    <p>            &quot;zh-CN&quot;: {</p>
-    <p>                nav_vision: &quot;愿景&quot;,</p>
-    <p>                nav_solution: &quot;解决方案&quot;,</p>
-    <p>                nav_ai: &quot;✨ AI 互动&quot;,</p>
-    <p>                nav_tokenomics: &quot;代币经济&quot;,</p>
-    <p>                hero_tag: &quot;🚀 创世通行证即将铸造&quot;,</p>
-    <p>                hero_title_prefix: &quot;AGI 时代的&quot;,</p>
-    <p>                hero_title_highlight: &quot;热力学本位&quot;,</p>
-    <p>                hero_desc: &quot;在机器接管世界之前，让我们先接管机器的电源。&lt;br&gt;加入 ElectroDemocracy，构建人类不可剥夺的能源主权。&quot;,</p>
-    <p>                hero_btn_mint: &quot;铸造创世通行证&quot;,</p>
-    <p>                hero_btn_whitepaper: &quot;阅读白皮书&quot;,</p>
-    <br>
-    <p>                // Vision Section</p>
-    <p>                vision_title: &quot;双重奇点：文明的十字路口&quot;,</p>
-    <p>                vision_subtitle: &quot;我们正处于两个历史性力量的交汇点，旧的规则正在崩塌。&quot;,</p>
-    <p>                vision_card_1_title: &quot;硅基智能奇点&quot;,</p>
-    <p>                vision_card_1_desc: &quot;AGI 的边际生产成本趋近于零。当机器能以毫秒级速度完成思考，人类劳动的交换价值将面临结构性坍塌。&quot;,</p>
-    <p>                vision_card_2_title: &quot;能源聚变奇点&quot;,</p>
-    <p>                vision_card_2_desc: &quot;可控核聚变将能源从稀缺资源转化为准无限工业品。能源将成为未来经济中唯一恒定的硬约束。&quot;,</p>
-    <p>                vision_conclusion: &quot;EDT 的使命：确立热力学价值本位&quot;,</p>
-    <p>                vision_conclusion_desc: &quot;与其锚定不稳定的法币信用，不如锚定物理世界恒定的能量 (kWh)。EDT 是人类在后劳动时代与机器经济对话的唯一通用语言。&quot;,</p>
-    <br>
-    <p>                ai_section_title: &quot;✨ EDT 智能实验室&quot;,</p>
-    <p>                ai_section_desc: &quot;探索 AGI 时代的能源与生活，让 AI 为你推演未来。&quot;,</p>
-    <p>                ai_energy_title: &quot;⚡️ AI 能源分析师&quot;,</p>
-    <p>                ai_energy_desc: &quot;输入你的月用电量，预测在 2030 年它能换取多少 UBI 收益。&quot;,</p>
-    <p>                ai_energy_placeholder: &quot;例如: 300 (kWh)&quot;,</p>
-    <p>                ai_energy_btn: &quot;生成财富报告&quot;,</p>
-    <p>                ai_energy_loading: &quot;正在连接 EDT 全球能源数据库...&quot;,</p>
-    <p>                ai_career_title: &quot;🔮 AGI 职业生存推演&quot;,</p>
-    <p>                ai_career_desc: &quot;输入你现在的职业，AI 将计算其被取代的概率，并分析原因和给出建议。&quot;,</p>
-    <p>                ai_career_placeholder: &quot;例如: 程序员 / 教师 / 司机&quot;,</p>
-    <p>                ai_career_btn: &quot;计算概率并分析&quot;,</p>
-    <p>                ai_career_loading: &quot;正在评估职业风险系数...&quot;,</p>
-    <p>                feature_1_title: &quot;AI 向人类纳税&quot;,</p>
-    <p>                feature_1_desc: &quot;在 EDT 协议中，算力中心消耗电力必须支付 EDT-U 代币。这创造了一个强制性的经济闭环，将机器产生的财富自动转移给人类。&quot;,</p>
-    <p>                feature_2_title: &quot;DePIN 物理锁&quot;,</p>
-    <p>                feature_2_desc: &quot;自主研发的智能能源网关 (SEG) 直接受链上合约控制。无支付，即断电。代码即法律，硬件即执法。&quot;,</p>
-    <p>                feature_3_title: &quot;全民基本收入 (UBI)&quot;,</p>
-    <p>                feature_3_desc: &quot;全球 20% 的能源产能将被锚定并代币化，作为生存保障免费分发给经过生物特征验证的真实人类。&quot;,</p>
-    <p>                token_title: &quot;代币分配&quot;,</p>
-    <p>                token_item_1: &quot;全球 UBI 储备池&quot;,</p>
-    <p>                token_item_2: &quot;公平发射 &amp; 流动性&quot;,</p>
-    <p>                token_item_3: &quot;创世空投&quot;,</p>
-    <p>                token_item_4: &quot;生态 &amp; 团队&quot;,</p>
-    <p>                roadmap_title: &quot;通往 2035 的路线图&quot;,</p>
-    <p>                phase_1_tag: &quot;第一阶段 (现在)&quot;,</p>
-    <p>                phase_1_title: &quot;创世与共识&quot;,</p>
-    <p>                phase_1_desc: &quot;发布白皮书 v1.0，启动 Discord 社区，发行 \&quot;EDT Genesis Pass\&quot; NFT 完成种子轮融资。&quot;,</p>
-    <p>                phase_2_tag: &quot;第二阶段 (2026 Q2)&quot;,</p>
-    <p>                phase_2_title: &quot;代币与流动性&quot;,</p>
-    <p>                phase_2_desc: &quot;代币生成事件 (TGE)，Solana 公平发射，上线 Raydium，启动硬件预购。&quot;,</p>
-    <p>                phase_3_tag: &quot;第三阶段 (2027+)&quot;,</p>
-    <p>                phase_3_title: &quot;物理网络落地&quot;,</p>
-    <p>                phase_3_desc: &quot;智能能源网关 (SEG) 量产发货，主网 Beta 上线，UBI 开始分发。&quot;,</p>
-    <br>
-    <p>                // Join Team Section</p>
-    <p>                join_title: &quot;加入我们的团队&quot;,</p>
-    <p>                join_desc: &quot;我们正在寻找充满激情的建设者，共同构建 AGI 时代的能源基础设施。&lt;br&gt;无论你是开发者、工程师还是创作者，EDT 都需要你。&quot;,</p>
-    <p>                join_role_1: &quot;区块链开发工程师&quot;,</p>
-    <p>                join_role_2: &quot;嵌入式硬件工程师&quot;,</p>
-    <p>                join_role_3: &quot;社区布道者&quot;,</p>
-    <p>                join_btn: &quot;发送简历&quot;,</p>
-    <br>
-    <p>                footer_slogan_1: &quot;主权不是被赋予的，&quot;,</p>
-    <p>                footer_slogan_2: &quot;而是被充能的。&quot;,</p>
-    <p>                footer_copyright: &quot;© 2025 ElectroDemocracy DAO. 保留所有权利。&lt;br&gt;投资加密资产涉及风险，请参阅白皮书中的免责声明。&quot;,</p>
-    <p>                prompt_energy_lang: &quot;使用中文回答。&quot;,</p>
-    <p>                prompt_career_lang: &quot;使用中文。&quot;,</p>
-    <p>            },</p>
-    <p>            &quot;en-US&quot;: {</p>
-    <p>                nav_vision: &quot;Vision&quot;,</p>
-    <p>                nav_solution: &quot;Solution&quot;,</p>
-    <p>                nav_ai: &quot;✨ AI Lab&quot;,</p>
-    <p>                nav_tokenomics: &quot;Tokenomics&quot;,</p>
-    <p>                hero_tag: &quot;🚀 Genesis Pass Minting Soon&quot;,</p>
-    <p>                hero_title_prefix: &quot;The Thermodynamic Standard&quot;,</p>
-    <p>                hero_title_highlight: &quot;for the AGI Era&quot;,</p>
-    <p>                hero_desc: &quot;Before machines take over the world, let&#039;s take over their power supply.&lt;br&gt;Join ElectroDemocracy to build non-negotiable energy sovereignty for humanity.&quot;,</p>
-    <p>                hero_btn_mint: &quot;Mint Genesis Pass&quot;,</p>
-    <p>                hero_btn_whitepaper: &quot;Read Whitepaper&quot;,</p>
-    <br>
-    <p>                // Vision Section</p>
-    <p>                vision_title: &quot;The Twin Singularities&quot;,</p>
-    <p>                vision_subtitle: &quot;We stand at the intersection of two historic forces where old rules collapse.&quot;,</p>
-    <p>                vision_card_1_title: &quot;Silicon Intelligence Singularity&quot;,</p>
-    <p>                vision_card_1_desc: &quot;AGI drives the marginal cost of production to zero. When machines think in milliseconds, the exchange value of human labor faces structural collapse.&quot;,</p>
-    <p>                vision_card_2_title: &quot;Fusion Energy Singularity&quot;,</p>
-    <p>                vision_card_2_desc: &quot;Controlled fusion transforms energy from a scarce resource into a quasi-infinite industrial good. Energy becomes the only constant constraint in the future economy.&quot;,</p>
-    <p>                vision_conclusion: &quot;EDT&#039;s Mission: The Thermodynamic Standard&quot;,</p>
-    <p>                vision_conclusion_desc: &quot;Instead of anchoring to unstable fiat credit, we anchor to the physical constant of energy (kWh). EDT is the only universal language for humans to trade with the machine economy.&quot;,</p>
-    <br>
-    <p>                ai_section_title: &quot;✨ EDT Intelligence Lab&quot;,</p>
-    <p>                ai_section_desc: &quot;Explore energy &amp; life in the AGI era. Let AI simulate your future.&quot;,</p>
-    <p>                ai_energy_title: &quot;⚡️ AI Energy Analyst&quot;,</p>
-    <p>                ai_energy_desc: &quot;Enter your monthly energy usage to predict its UBI value in 2030.&quot;,</p>
-    <p>                ai_energy_placeholder: &quot;e.g., 300 (kWh)&quot;,</p>
-    <p>                ai_energy_btn: &quot;Generate Wealth Report&quot;,</p>
-    <p>                ai_energy_loading: &quot;Connecting to Global Energy Database...&quot;,</p>
-    <p>                ai_career_title: &quot;🔮 AGI Career Survival Sim&quot;,</p>
-    <p>                ai_career_desc: &quot;Enter your current job. AI will calculate replacement probability, analyze reasons, and provide suggestions.&quot;,</p>
-    <p>                ai_career_placeholder: &quot;e.g., Programmer / Teacher / Driver&quot;,</p>
-    <p>                ai_career_btn: &quot;Calculate &amp; Analyze&quot;,</p>
-    <p>                ai_career_loading: &quot;Evaluating risk factors...&quot;,</p>
-    <br>
-    <p>                feature_1_title: &quot;Taxing AI for Humanity&quot;,</p>
-    <p>                feature_1_desc: &quot;In the EDT protocol, compute centers must pay EDT-U tokens for electricity. This creates a mandatory economic loop, transferring machine-generated wealth to humans.&quot;,</p>
-    <p>                feature_2_title: &quot;DePIN Physical Lock&quot;,</p>
-    <p>                feature_2_desc: &quot;Proprietary Smart Energy Gateways (SEG) are controlled directly by on-chain contracts. No payment, no power. Code is Law, Hardware is Enforcement.&quot;,</p>
-    <p>                feature_3_title: &quot;Universal Basic Income&quot;,</p>
-    <p>                feature_3_desc: &quot;20% of global energy capacity will be tokenized and distributed for free as survival UBI to verified humans via Proof-of-Personhood.&quot;,</p>
-    <p>                token_title: &quot;Token Distribution&quot;,</p>
-    <p>                token_item_1: &quot;Global UBI Reserve&quot;,</p>
-    <p>                token_item_2: &quot;Fair Launch &amp; Liquidity&quot;,</p>
-    <p>                token_item_3: &quot;Genesis Airdrop&quot;,</p>
-    <p>                token_item_4: &quot;Ecosystem &amp; Team&quot;,</p>
-    <p>                roadmap_title: &quot;Roadmap to 2035&quot;,</p>
-    <p>                phase_1_tag: &quot;PHASE 1 (NOW)&quot;,</p>
-    <p>                phase_1_title: &quot;Genesis &amp; Consensus&quot;,</p>
-    <p>                phase_1_desc: &quot;Whitepaper v1.0 release, Discord launch, \&quot;EDT Genesis Pass\&quot; NFT mint for seed funding.&quot;,</p>
-    <p>                phase_2_tag: &quot;PHASE 2 (Q2 2026)&quot;,</p>
-    <p>                phase_2_title: &quot;Token &amp; Liquidity&quot;,</p>
-    <p>                phase_2_desc: &quot;Token Generation Event (TGE), Solana Fair Launch, Raydium listing, Hardware pre-orders.&quot;,</p>
-    <p>                phase_3_tag: &quot;PHASE 3 (2027+)&quot;,</p>
-    <p>                phase_3_title: &quot;Physical Network&quot;,</p>
-    <p>                phase_3_desc: &quot;SEG hardware mass production &amp; shipping, Mainnet Beta live, UBI distribution begins.&quot;,</p>
-    <br>
-    <p>                // Join Team Section</p>
-    <p>                join_title: &quot;Join Our Team&quot;,</p>
-    <p>                join_desc: &quot;We are seeking passionate builders to architect the energy infrastructure of the AGI era.&lt;br&gt;Whether you are a developer, engineer, or creator, EDT needs you.&quot;,</p>
-    <p>                join_role_1: &quot;Blockchain Developer&quot;,</p>
-    <p>                join_role_2: &quot;Embedded Hardware Engineer&quot;,</p>
-    <p>                join_role_3: &quot;Community Evangelist&quot;,</p>
-    <p>                join_btn: &quot;Send Resume&quot;,</p>
-    <br>
-    <p>                footer_slogan_1: &quot;SOVEREIGNTY IS NOT GIVEN,&quot;,</p>
-    <p>                footer_slogan_2: &quot;IT IS POWERED.&quot;,</p>
-    <p>                footer_copyright: &quot;© 2025 ElectroDemocracy DAO. All rights reserved.&lt;br&gt;Crypto investments involve risk. See Whitepaper disclaimer.&quot;,</p>
-    <p>                prompt_energy_lang: &quot;Answer in English.&quot;,</p>
-    <p>                prompt_career_lang: &quot;Answer in English.&quot;,</p>
-    <p>            }</p>
-    <p>        };</p>
-    <br>
-    <p>        let currentLang = &quot;zh-CN&quot;;</p>
-    <br>
-    <p>        // Function to update text content</p>
-    <p>        window.updateLanguage = (lang) =&gt; {</p>
-    <p>            currentLang = lang;</p>
-    <p>            const t = translations[lang];</p>
-    <br>
-    <p>            // Update Text Content by ID</p>
-    <p>            document.querySelectorAll(&#039;[data-i18n]&#039;).forEach(el =&gt; {</p>
-    <p>                const key = el.getAttribute(&#039;data-i18n&#039;);</p>
-    <p>                if (t[key]) el.innerHTML = t[key];</p>
-    <p>            });</p>
-    <br>
-    <p>            // Update Placeholders</p>
-    <p>            document.getElementById(&#039;energyUsage&#039;).placeholder = t.ai_energy_placeholder;</p>
-    <p>            document.getElementById(&#039;jobInput&#039;).placeholder = t.ai_career_placeholder;</p>
-    <br>
-    <p>            // Update Button State</p>
-    <p>            const btn = document.getElementById(&#039;langBtn&#039;);</p>
-    <p>            btn.innerText = lang === &quot;zh-CN&quot; ? &quot;EN&quot; : &quot;中&quot;;</p>
-    <p>        };</p>
-    <br>
-    <p>        window.toggleLanguage = () =&gt; {</p>
-    <p>            const newLang = currentLang === &quot;zh-CN&quot; ? &quot;en-US&quot; : &quot;zh-CN&quot;;</p>
-    <p>            window.updateLanguage(newLang);</p>
-    <p>        };</p>
-    <br>
-    <p>        // Initialize Language</p>
-    <p>        window.onload = () =&gt; window.updateLanguage(&quot;zh-CN&quot;);</p>
-    <br>
-    <br>
-    <p>        // --- PDF Modal Logic ---</p>
-    <p>        window.openWhitepaper = () =&gt; {</p>
-    <p>            const modal = document.getElementById(&#039;pdfModal&#039;);</p>
-    <p>            const iframe = document.getElementById(&#039;pdfFrame&#039;);</p>
-    <br>
-    <p>            // Ensure you have these files in your folder!</p>
-    <p>            const pdfSrc = currentLang === &quot;zh-CN&quot; </p>
-    <p>                ? &quot;EDT_Whitepaper_ZH.pdf&quot; </p>
-    <p>                : &quot;EDT_Whitepaper_EN.pdf&quot;;</p>
-    <br>
-    <p>            iframe.src = pdfSrc;</p>
-    <p>            modal.classList.remove(&#039;hidden&#039;);</p>
-    <p>            document.body.style.overflow = &#039;hidden&#039;;</p>
-    <p>        };</p>
-    <br>
-    <p>        window.closeWhitepaper = () =&gt; {</p>
-    <p>            const modal = document.getElementById(&#039;pdfModal&#039;);</p>
-    <p>            const iframe = document.getElementById(&#039;pdfFrame&#039;);</p>
-    <br>
-    <p>            modal.classList.add(&#039;hidden&#039;);</p>
-    <p>            iframe.src = &quot;&quot;;</p>
-    <p>            document.body.style.overflow = &#039;&#039;;</p>
-    <p>        };</p>
-    <br>
-    <br>
-    <p>        // --- Feature 1: Energy Analyst ---</p>
-    <p>        window.analyzeEnergy = async () =&gt; {</p>
-    <p>            if (!apiKey) { alert(&quot;请先配置 API Key&quot;); return; }</p>
-    <p>            const usageInput = document.getElementById(&#039;energyUsage&#039;);</p>
-    <p>            const resultDiv = document.getElementById(&#039;analysisResult&#039;);</p>
-    <p>            const loadingDiv = document.getElementById(&#039;loading&#039;);</p>
-    <p>            const usage = usageInput.value;</p>
-    <p>            const t = translations[currentLang];</p>
-    <br>
-    <p>            if (!usage) {</p>
-    <p>                alert(currentLang === &quot;zh-CN&quot; ? &quot;请输入您的月度用电量&quot; : &quot;Please enter your monthly energy usage&quot;);</p>
-    <p>                return;</p>
-    <p>            }</p>
-    <br>
-    <p>            // UI State: Loading</p>
-    <p>            resultDiv.classList.add(&#039;hidden&#039;);</p>
-    <p>            loadingDiv.classList.remove(&#039;hidden&#039;);</p>
-    <p>            document.getElementById(&#039;loadingText&#039;).innerText = t.ai_energy_loading;</p>
-    <br>
-    <p>            const prompt = `</p>
-    <p>                Role: AI Energy Analyst for ElectroDemocracy Token (EDT).</p>
-    <p>                Context: EDT is a blockchain energy currency (1 EDT-U = 1 kWh) solving AGI energy distribution. Humans earn UBI by selling energy rights to AI.</p>
-    <p>                User Input: Monthly Energy Usage = ${usage} kWh.</p>
-    <p>                Task: Generate a short, fun &quot;2030 Future Energy Report&quot; (approx 100 words).</p>
-    <p>                Content:</p>
-    <p>                1. What this energy means in the AGI era (e.g., compute power, feeding robots).</p>
-    <p>                2. How owning an EDT Genesis Pass and UBI could cover this cost.</p>
-    <p>                3. Tone: Sci-fi, hopeful, cyberpunk.</p>
-    <p>                4. Language: ${t.prompt_energy_lang}</p>
-    <p>            `;</p>
-    <br>
-    <p>            try {</p>
-    <p>                const result = await model.generateContent(prompt);</p>
-    <p>                const response = await result.response;</p>
-    <p>                const text = response.text();</p>
-    <br>
-    <p>                // UI State: Success</p>
-    <p>                loadingDiv.classList.add(&#039;hidden&#039;);</p>
-    <p>                resultDiv.classList.remove(&#039;hidden&#039;);</p>
-    <p>                document.getElementById(&#039;aiResponse&#039;).innerHTML = text.replace(/\n/g, &#039;&lt;br&gt;&#039;);</p>
-    <br>
-    <p>            } catch (error) {</p>
-    <p>                console.error(&quot;Gemini API Error:&quot;, error);</p>
-    <p>                loadingDiv.classList.add(&#039;hidden&#039;);</p>
-    <p>                alert(&quot;API Error / API 错误&quot;);</p>
-    <p>            }</p>
-    <p>        };</p>
-    <br>
-    <p>        // --- Feature 2: Future Career Simulator ---</p>
-    <p>        window.simulateFuture = async () =&gt; {</p>
-    <p>            if (!apiKey) { alert(&quot;请先配置 API Key&quot;); return; }</p>
-    <p>            const jobInput = document.getElementById(&#039;jobInput&#039;);</p>
-    <p>            const simResultDiv = document.getElementById(&#039;simResult&#039;);</p>
-    <p>            const simLoadingDiv = document.getElementById(&#039;simLoading&#039;);</p>
-    <p>            const job = jobInput.value;</p>
-    <p>            const t = translations[currentLang];</p>
-    <br>
-    <p>            if (!job) {</p>
-    <p>                alert(currentLang === &quot;zh-CN&quot; ? &quot;请输入您目前的职业&quot; : &quot;Please enter your current job&quot;);</p>
-    <p>                return;</p>
-    <p>            }</p>
-    <br>
-    <p>            // UI State: Loading</p>
-    <p>            simResultDiv.classList.add(&#039;hidden&#039;);</p>
-    <p>            simLoadingDiv.classList.remove(&#039;hidden&#039;);</p>
-    <p>            document.getElementById(&#039;simLoadingText&#039;).innerText = t.ai_career_loading;</p>
-    <br>
-    <p>            // Updated Prompt for Risk Analysis &amp; Advice</p>
-    <p>            const prompt = `</p>
-    <p>                Role: AI Career Strategy Consultant for the AGI Era.</p>
-    <p>                Context: The year is 2035. AGI has redefined the labor market.</p>
-    <p>                User&#039;s Current Job: ${job}.</p>
-    <br>
-    <p>                Task: Provide a structured career risk assessment.</p>
-    <p>                1. Calculate &quot;AGI Displacement Probability&quot; (0-100%) based on the job&#039;s repetitiveness and cognitive replaceability.</p>
-    <p>                2. Analysis: Why is this risk high or low? (First Principles thinking).</p>
-    <p>                3. Suggestions: Practical advice for the user to stay relevant or pivot using EDT ecosystem resources.</p>
-    <br>
-    <p>                Format: Return a structured HTML response (no markdown blocks).</p>
-    <br>
-    <p>                HTML Structure:</p>
-    <p>                &lt;div class=&quot;mb-4&quot;&gt;</p>
-    <p>                    &lt;span class=&quot;text-4xl font-bold {COLOR}&quot;&gt; {PERCENTAGE}% &lt;/span&gt;</p>
-    <p>                    &lt;br&gt;&lt;span class=&quot;text-xs uppercase tracking-widest text-gray-500&quot;&gt;被 AGI 取代概率 / Displacement Probability&lt;/span&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>                &lt;div class=&quot;space-y-4 text-gray-300 text-left&quot;&gt;</p>
-    <p>                    &lt;div&gt;</p>
-    <p>                        &lt;h4 class=&quot;text-cyan-400 font-bold mb-1&quot;&gt;📉 原因分析 (Analysis)&lt;/h4&gt;</p>
-    <p>                        &lt;p class=&quot;text-sm leading-relaxed&quot;&gt;{Analysis content}&lt;/p&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                    &lt;div class=&quot;border-t border-slate-700 pt-3&quot;&gt;</p>
-    <p>                        &lt;h4 class=&quot;text-purple-400 font-bold mb-1&quot;&gt;💡 生存建议 (Suggestions)&lt;/h4&gt;</p>
-    <p>                        &lt;p class=&quot;text-sm leading-relaxed&quot;&gt;{Suggestions content}&lt;/p&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <br>
-    <p>                Rules:</p>
-    <p>                - Replace {COLOR} with: &#039;text-red-500&#039; if risk &gt; 70%, &#039;text-yellow-400&#039; if 40-70%, &#039;text-green-400&#039; if &lt; 40%.</p>
-    <p>                - Keep the tone professional yet visionary.</p>
-    <p>                - Language: ${t.prompt_career_lang}</p>
-    <p>            `;</p>
-    <br>
-    <p>            try {</p>
-    <p>                const result = await model.generateContent(prompt);</p>
-    <p>                const response = await result.response;</p>
-    <p>                const text = response.text();</p>
-    <br>
-    <p>                // UI State: Success</p>
-    <p>                simLoadingDiv.classList.add(&#039;hidden&#039;);</p>
-    <p>                simResultDiv.classList.remove(&#039;hidden&#039;);</p>
-    <p>                document.getElementById(&#039;simAiResponse&#039;).innerHTML = text;</p>
-    <br>
-    <p>            } catch (error) {</p>
-    <p>                console.error(&quot;Gemini API Error:&quot;, error);</p>
-    <p>                simLoadingDiv.classList.add(&#039;hidden&#039;);</p>
-    <p>                alert(&quot;API Error / API 错误&quot;);</p>
-    <p>            }</p>
-    <p>        };</p>
-    <p>    &lt;/script&gt;</p>
-    <p>    &lt;style&gt;</p>
-    <p>        @import url(&#039;https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Rajdhani:wght@300;500;700&amp;display=swap&#039;);</p>
-    <br>
-    <p>        body {</p>
-    <p>            font-family: &#039;Rajdhani&#039;, sans-serif;</p>
-    <p>            background-color: #050505;</p>
-    <p>            color: #e0e0e0;</p>
-    <p>            overflow-x: hidden;</p>
-    <p>        }</p>
-    <br>
-    <p>        h1, h2, h3, .brand-font {</p>
-    <p>            font-family: &#039;Orbitron&#039;, sans-serif;</p>
-    <p>        }</p>
-    <br>
-    <p>        .text-glow {</p>
-    <p>            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.3);</p>
-    <p>        }</p>
-    <br>
-    <p>        .border-glow {</p>
-    <p>            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);</p>
-    <p>        }</p>
-    <br>
-    <p>        .bg-cyber-grid {</p>
-    <p>            background-image: </p>
-    <p>                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),</p>
-    <p>                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);</p>
-    <p>            background-size: 40px 40px;</p>
-    <p>        }</p>
-    <br>
-    <p>        .btn-primary {</p>
-    <p>            background: linear-gradient(90deg, #00ffff, #0077ff);</p>
-    <p>            color: #000;</p>
-    <p>            font-weight: 700;</p>
-    <p>            text-transform: uppercase;</p>
-    <p>            letter-spacing: 1px;</p>
-    <p>            transition: all 0.3s ease;</p>
-    <p>        }</p>
-    <br>
-    <p>        .btn-primary:hover {</p>
-    <p>            transform: translateY(-2px);</p>
-    <p>            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);</p>
-    <p>        }</p>
-    <br>
-    <p>        /* 3D Coin Animation */</p>
-    <p>        @keyframes float {</p>
-    <p>            0% { transform: translateY(0px) rotateY(0deg); }</p>
-    <p>            50% { transform: translateY(-20px) rotateY(10deg); }</p>
-    <p>            100% { transform: translateY(0px) rotateY(0deg); }</p>
-    <p>        }</p>
-    <br>
-    <p>        .floating-coin {</p>
-    <p>            animation: float 6s ease-in-out infinite;</p>
-    <p>        }</p>
-    <br>
-    <p>        /* Modal Styles */</p>
-    <p>        .modal-bg {</p>
-    <p>            background-color: rgba(0, 0, 0, 0.9);</p>
-    <p>            backdrop-filter: blur(5px);</p>
-    <p>        }</p>
-    <p>    &lt;/style&gt;</p>
-    <p>&lt;/head&gt;</p>
-    <p>&lt;body class=&quot;bg-cyber-grid&quot;&gt;</p>
-    <br>
-    <p>    &lt;!-- PDF Viewer Modal --&gt;</p>
-    <p>    &lt;div id=&quot;pdfModal&quot; class=&quot;hidden fixed inset-0 z-[100] modal-bg flex items-center justify-center p-4&quot;&gt;</p>
-    <p>        &lt;div class=&quot;relative w-full h-full max-w-6xl flex flex-col&quot;&gt;</p>
-    <p>            &lt;!-- Close Button --&gt;</p>
-    <p>            &lt;button onclick=&quot;closeWhitepaper()&quot; class=&quot;absolute -top-10 right-0 text-white hover:text-cyan-400 transition flex items-center gap-2&quot;&gt;</p>
-    <p>                &lt;span class=&quot;text-lg&quot;&gt;CLOSE&lt;/span&gt;</p>
-    <p>                &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; class=&quot;h-8 w-8&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke=&quot;currentColor&quot;&gt;</p>
-    <p>                    &lt;path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; stroke-width=&quot;2&quot; d=&quot;M6 18L18 6M6 6l12 12&quot; /&gt;</p>
-    <p>                &lt;/svg&gt;</p>
-    <p>            &lt;/button&gt;</p>
-    <br>
-    <p>            &lt;!-- PDF Container --&gt;</p>
-    <p>            &lt;div class=&quot;bg-slate-800 rounded-lg shadow-2xl overflow-hidden flex-1 border border-slate-700&quot;&gt;</p>
-    <p>                &lt;iframe id=&quot;pdfFrame&quot; class=&quot;w-full h-full&quot; src=&quot;&quot;&gt;&lt;/iframe&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>    &lt;/div&gt;</p>
-    <br>
-    <p>    &lt;!-- Navigation --&gt;</p>
-    <p>    &lt;nav class=&quot;flex justify-between items-center px-4 md:px-8 py-6 max-w-7xl mx-auto fixed w-full top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10&quot;&gt;</p>
-    <p>        &lt;div class=&quot;flex items-center space-x-3&quot;&gt;</p>
-    <p>            &lt;svg width=&quot;40&quot; height=&quot;40&quot; viewBox=&quot;0 0 512 512&quot; fill=&quot;none&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;</p>
-    <p>                &lt;circle cx=&quot;256&quot; cy=&quot;256&quot; r=&quot;256&quot; fill=&quot;#0A1A2F&quot; /&gt;</p>
-    <p>                &lt;circle cx=&quot;256&quot; cy=&quot;256&quot; r=&quot;230&quot; stroke=&quot;#00FFFF&quot; stroke-width=&quot;20&quot; stroke-opacity=&quot;0.2&quot; /&gt;</p>
-    <p>                &lt;g transform=&quot;translate(106, 106) scale(0.59)&quot;&gt;</p>
-    <p>                    &lt;path d=&quot;M 100 50 L 412 50 L 412 130 L 200 130 L 200 190 L 350 190 L 350 270 L 200 270 L 200 330 L 412 330 L 412 410 L 100 410 L 100 50 Z&quot; fill=&quot;#FFFFFF&quot; /&gt;</p>
-    <p>                    &lt;rect x=&quot;60&quot; y=&quot;100&quot; width=&quot;40&quot; height=&quot;40&quot; fill=&quot;#00FFFF&quot; /&gt;</p>
-    <p>                    &lt;rect x=&quot;60&quot; y=&quot;320&quot; width=&quot;40&quot; height=&quot;40&quot; fill=&quot;#00FFFF&quot; /&gt;</p>
-    <p>                    &lt;rect x=&quot;412&quot; y=&quot;100&quot; width=&quot;40&quot; height=&quot;40&quot; fill=&quot;#00FFFF&quot; /&gt;</p>
-    <p>                    &lt;rect x=&quot;412&quot; y=&quot;320&quot; width=&quot;40&quot; height=&quot;40&quot; fill=&quot;#00FFFF&quot; /&gt;</p>
-    <p>                &lt;/g&gt;</p>
-    <p>            &lt;/svg&gt;</p>
-    <p>            &lt;span class=&quot;text-xl md:text-2xl font-bold text-white tracking-wider brand-font&quot;&gt;EDT &lt;span class=&quot;text-cyan-400&quot;&gt;NETWORK&lt;/span&gt;&lt;/span&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>        &lt;div class=&quot;hidden md:flex space-x-8 text-lg font-medium&quot;&gt;</p>
-    <p>            &lt;a href=&quot;#vision&quot; class=&quot;hover:text-cyan-400 transition&quot; data-i18n=&quot;nav_vision&quot;&gt;愿景&lt;/a&gt;</p>
-    <p>            &lt;a href=&quot;#solution&quot; class=&quot;hover:text-cyan-400 transition&quot; data-i18n=&quot;nav_solution&quot;&gt;解决方案&lt;/a&gt;</p>
-    <p>            &lt;a href=&quot;#features&quot; class=&quot;hover:text-cyan-400 transition&quot; data-i18n=&quot;nav_ai&quot;&gt;✨ AI 互动&lt;/a&gt;</p>
-    <p>            &lt;a href=&quot;#tokenomics&quot; class=&quot;hover:text-cyan-400 transition&quot; data-i18n=&quot;nav_tokenomics&quot;&gt;代币经济&lt;/a&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>        &lt;div class=&quot;flex items-center gap-4&quot;&gt;</p>
-    <p>            &lt;!-- Language Toggle Button --&gt;</p>
-    <p>            &lt;button onclick=&quot;toggleLanguage()&quot; id=&quot;langBtn&quot; class=&quot;text-white border border-slate-600 px-3 py-1 rounded hover:border-cyan-400 transition font-mono&quot;&gt;</p>
-    <p>                EN</p>
-    <p>            &lt;/button&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>    &lt;/nav&gt;</p>
-    <br>
-    <p>    &lt;!-- Hero Section --&gt;</p>
-    <p>    &lt;section class=&quot;relative min-h-screen flex items-center justify-center pt-24 pb-20 overflow-hidden&quot;&gt;</p>
-    <p>        &lt;div class=&quot;absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600 rounded-full blur-[150px] opacity-20 pointer-events-none&quot;&gt;&lt;/div&gt;</p>
-    <br>
-    <p>        &lt;div class=&quot;container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10&quot;&gt;</p>
-    <p>            &lt;div class=&quot;text-left space-y-6&quot;&gt;</p>
-    <p>                &lt;!-- Removed Rocket Tag as requested earlier --&gt;</p>
-    <p>                &lt;!-- &lt;div class=&quot;inline-block bg-slate-800 border border-slate-700 px-4 py-1 rounded-full text-sm text-cyan-300 mb-2&quot; data-i18n=&quot;hero_tag&quot;&gt;</p>
-    <p>                    🚀 创世通行证即将铸造</p>
-    <p>                &lt;/div&gt; --&gt;</p>
-    <p>                &lt;h1 class=&quot;text-4xl md:text-6xl font-black leading-tight&quot;&gt;</p>
-    <p>                    &lt;span data-i18n=&quot;hero_title_prefix&quot;&gt;AGI 时代的&lt;/span&gt; &lt;br&gt;</p>
-    <p>                    &lt;span class=&quot;text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600&quot; data-i18n=&quot;hero_title_highlight&quot;&gt;热力学本位&lt;/span&gt;</p>
-    <p>                &lt;/h1&gt;</p>
-    <p>                &lt;p class=&quot;text-xl text-gray-400 max-w-lg leading-relaxed&quot; data-i18n=&quot;hero_desc&quot;&gt;</p>
-    <p>                    在机器接管世界之前，让我们先接管机器的电源。&lt;br&gt;加入 ElectroDemocracy，构建人类不可剥夺的能源主权。</p>
-    <p>                &lt;/p&gt;</p>
-    <p>                &lt;div class=&quot;flex space-x-4 pt-4&quot;&gt;</p>
-    <p>                    &lt;button class=&quot;btn-primary px-8 py-4 rounded text-lg&quot; data-i18n=&quot;hero_btn_mint&quot;&gt;</p>
-    <p>                        铸造创世通行证</p>
-    <p>                    &lt;/button&gt;</p>
-    <p>                    &lt;!-- Read Whitepaper Button: Now triggers modal --&gt;</p>
-    <p>                    &lt;button onclick=&quot;openWhitepaper()&quot; class=&quot;border border-gray-600 px-8 py-4 rounded text-lg hover:border-white transition flex items-center justify-center gap-2&quot;&gt;</p>
-    <p>                        &lt;span data-i18n=&quot;hero_btn_whitepaper&quot;&gt;阅读白皮书&lt;/span&gt;</p>
-    <p>                        &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; class=&quot;h-5 w-5&quot; viewBox=&quot;0 0 20 20&quot; fill=&quot;currentColor&quot;&gt;</p>
-    <p>                            &lt;path d=&quot;M10 12a2 2 0 100-4 2 2 0 000 4z&quot; /&gt;</p>
-    <p>                            &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z&quot; clip-rule=&quot;evenodd&quot; /&gt;</p>
-    <p>                        &lt;/svg&gt;</p>
-    <p>                    &lt;/button&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <br>
-    <p>            &lt;div class=&quot;flex justify-center relative&quot;&gt;</p>
-    <p>                &lt;div class=&quot;w-80 h-80 md:w-96 md:h-96 relative floating-coin&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;absolute inset-0 rounded-full border-[12px] border-slate-300 shadow-[0_0_50px_rgba(0,255,255,0.4)] bg-black/80 backdrop-blur-sm flex items-center justify-center overflow-hidden&quot;&gt;</p>
-    <p>                        &lt;div class=&quot;absolute inset-0 opacity-30&quot;&gt;</p>
-    <p>                            &lt;svg width=&quot;100%&quot; height=&quot;100%&quot;&gt;</p>
-    <p>                                &lt;pattern id=&quot;circuit&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;40&quot; height=&quot;40&quot; patternUnits=&quot;userSpaceOnUse&quot;&gt;</p>
-    <p>                                    &lt;path d=&quot;M10 10h20v20h-20z&quot; fill=&quot;none&quot; stroke=&quot;#00FFFF&quot; stroke-width=&quot;1&quot;/&gt;</p>
-    <p>                                    &lt;path d=&quot;M0 20h40 M20 0v40&quot; stroke=&quot;#00FFFF&quot; stroke-width=&quot;0.5&quot;/&gt;</p>
-    <p>                                &lt;/pattern&gt;</p>
-    <p>                                &lt;rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;url(#circuit)&quot;/&gt;</p>
-    <p>                            &lt;/svg&gt;</p>
-    <p>                        &lt;/div&gt;</p>
-    <p>                        &lt;div class=&quot;w-2/3 h-2/3 relative z-10&quot;&gt;</p>
-    <p>                            &lt;svg viewBox=&quot;0 0 512 512&quot; fill=&quot;none&quot;&gt;</p>
-    <p>                                &lt;defs&gt;</p>
-    <p>                                    &lt;linearGradient id=&quot;metal-grad&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;512&quot; y2=&quot;512&quot;&gt;</p>
-    <p>                                        &lt;stop offset=&quot;0%&quot; stop-color=&quot;#FFFFFF&quot; /&gt;</p>
-    <p>                                        &lt;stop offset=&quot;50%&quot; stop-color=&quot;#A0A0A0&quot; /&gt;</p>
-    <p>                                        &lt;stop offset=&quot;100%&quot; stop-color=&quot;#FFFFFF&quot; /&gt;</p>
-    <p>                                    &lt;/linearGradient&gt;</p>
-    <p>                                    &lt;filter id=&quot;glow-symbol&quot;&gt;</p>
-    <p>                                        &lt;feGaussianBlur stdDeviation=&quot;4&quot; result=&quot;coloredBlur&quot;/&gt;</p>
-    <p>                                        &lt;feMerge&gt;</p>
-    <p>                                            &lt;feMergeNode in=&quot;coloredBlur&quot;/&gt;</p>
-    <p>                                            &lt;feMergeNode in=&quot;SourceGraphic&quot;/&gt;</p>
-    <p>                                        &lt;/feMerge&gt;</p>
-    <p>                                    &lt;/filter&gt;</p>
-    <p>                                &lt;/defs&gt;</p>
-    <p>                                &lt;path d=&quot;M 120 80 L 392 80 L 392 160 L 220 160 L 220 220 L 340 220 L 340 290 L 220 290 L 220 350 L 392 350 L 392 430 L 120 430 L 120 80 Z&quot; </p>
-    <p>                                      fill=&quot;url(#metal-grad)&quot; </p>
-    <p>                                      stroke=&quot;#00FFFF&quot; </p>
-    <p>                                      stroke-width=&quot;8&quot;</p>
-    <p>                                      filter=&quot;url(#glow-symbol)&quot;</p>
-    <p>                                /&gt;</p>
-    <p>                                &lt;circle cx=&quot;100&quot; cy=&quot;80&quot; r=&quot;10&quot; fill=&quot;#00FF00&quot; filter=&quot;url(#glow-symbol)&quot;/&gt;</p>
-    <p>                                &lt;circle cx=&quot;100&quot; cy=&quot;430&quot; r=&quot;10&quot; fill=&quot;#00FF00&quot; filter=&quot;url(#glow-symbol)&quot;/&gt;</p>
-    <p>                                &lt;circle cx=&quot;412&quot; cy=&quot;80&quot; r=&quot;10&quot; fill=&quot;#00FFFF&quot; filter=&quot;url(#glow-symbol)&quot;/&gt;</p>
-    <p>                                &lt;circle cx=&quot;412&quot; cy=&quot;430&quot; r=&quot;10&quot; fill=&quot;#00FFFF&quot; filter=&quot;url(#glow-symbol)&quot;/&gt;</p>
-    <p>                            &lt;/svg&gt;</p>
-    <p>                        &lt;/div&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>    &lt;/section&gt;</p>
-    <br>
-    <p>    &lt;!-- NEW: Vision Section --&gt;</p>
-    <p>    &lt;section id=&quot;vision&quot; class=&quot;py-24 bg-gradient-to-b from-black to-slate-900 border-t border-slate-800&quot;&gt;</p>
-    <p>        &lt;div class=&quot;container mx-auto px-6 max-w-6xl text-center&quot;&gt;</p>
-    <p>            &lt;h2 class=&quot;text-4xl font-bold mb-6 text-white&quot; data-i18n=&quot;vision_title&quot;&gt;双重奇点：文明的十字路口&lt;/h2&gt;</p>
-    <p>            &lt;p class=&quot;text-xl text-gray-400 max-w-3xl mx-auto mb-16&quot; data-i18n=&quot;vision_subtitle&quot;&gt;我们正处于两个历史性力量的交汇点，旧的规则正在崩塌。&lt;/p&gt;</p>
-    <br>
-    <p>            &lt;div class=&quot;grid md:grid-cols-3 gap-8 items-stretch&quot;&gt;</p>
-    <p>                &lt;!-- Card 1: AGI --&gt;</p>
-    <p>                &lt;div class=&quot;bg-slate-800/50 p-8 rounded-2xl border border-red-500/20 hover:border-red-500/50 transition duration-300 flex flex-col&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;text-5xl mb-6&quot;&gt;🤖&lt;/div&gt;</p>
-    <p>                    &lt;h3 class=&quot;text-2xl font-bold text-red-400 mb-4&quot; data-i18n=&quot;vision_card_1_title&quot;&gt;硅基智能奇点&lt;/h3&gt;</p>
-    <p>                    &lt;p class=&quot;text-gray-400 leading-relaxed flex-grow&quot; data-i18n=&quot;vision_card_1_desc&quot;&gt;</p>
-    <p>                        AGI 的边际生产成本趋近于零。当机器能以毫秒级速度完成思考，人类劳动的交换价值将面临结构性坍塌。</p>
-    <p>                    &lt;/p&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <br>
-    <p>                &lt;!-- Middle Connector --&gt;</p>
-    <p>                &lt;div class=&quot;hidden md:flex flex-col justify-center items-center&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;w-1 h-full bg-gradient-to-b from-transparent via-cyan-500 to-transparent opacity-50&quot;&gt;&lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <br>
-    <p>                &lt;!-- Card 2: Fusion --&gt;</p>
-    <p>                &lt;div class=&quot;bg-slate-800/50 p-8 rounded-2xl border border-green-500/20 hover:border-green-500/50 transition duration-300 flex flex-col&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;text-5xl mb-6&quot;&gt;⚛️&lt;/div&gt;</p>
-    <p>                    &lt;h3 class=&quot;text-2xl font-bold text-green-400 mb-4&quot; data-i18n=&quot;vision_card_2_title&quot;&gt;能源聚变奇点&lt;/h3&gt;</p>
-    <p>                    &lt;p class=&quot;text-gray-400 leading-relaxed flex-grow&quot; data-i18n=&quot;vision_card_2_desc&quot;&gt;</p>
-    <p>                        可控核聚变将能源从稀缺资源转化为准无限工业品。能源将成为未来经济中唯一恒定的硬约束。</p>
-    <p>                    &lt;/p&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <br>
-    <p>            &lt;div class=&quot;mt-16 bg-cyan-900/20 border border-cyan-500/30 p-8 rounded-xl backdrop-blur-sm&quot;&gt;</p>
-    <p>                &lt;h3 class=&quot;text-2xl font-bold text-cyan-300 mb-4&quot; data-i18n=&quot;vision_conclusion&quot;&gt;EDT 的使命：确立热力学价值本位&lt;/h3&gt;</p>
-    <p>                &lt;p class=&quot;text-gray-300 text-lg&quot; data-i18n=&quot;vision_conclusion_desc&quot;&gt;</p>
-    <p>                    与其锚定不稳定的法币信用，不如锚定物理世界恒定的能量 (kWh)。EDT 是人类在后劳动时代与机器经济对话的唯一通用语言。</p>
-    <p>                &lt;/p&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>    &lt;/section&gt;</p>
-    <br>
-    <p>    &lt;!-- AI Features --&gt;</p>
-    <p>    &lt;section id=&quot;features&quot; class=&quot;py-20 bg-slate-900/50 border-y border-slate-800&quot;&gt;</p>
-    <p>        &lt;div class=&quot;container mx-auto px-6 max-w-6xl&quot;&gt;</p>
-    <p>            &lt;div class=&quot;text-center mb-16&quot;&gt;</p>
-    <p>                &lt;span class=&quot;text-cyan-400 font-bold tracking-widest text-sm uppercase&quot;&gt;Powered by Gemini AI&lt;/span&gt;</p>
-    <p>                &lt;h2 class=&quot;text-4xl font-bold mt-2 mb-4&quot; data-i18n=&quot;ai_section_title&quot;&gt;✨ EDT 智能实验室&lt;/h2&gt;</p>
-    <p>                &lt;p class=&quot;text-gray-400&quot; data-i18n=&quot;ai_section_desc&quot;&gt;探索 AGI 时代的能源与生活，让 AI 为你推演未来。&lt;/p&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <br>
-    <p>            &lt;div class=&quot;grid md:grid-cols-2 gap-12&quot;&gt;</p>
-    <p>                &lt;!-- Energy Analyst --&gt;</p>
-    <p>                &lt;div class=&quot;bg-black/40 border border-slate-700 rounded-2xl p-8 backdrop-blur-md shadow-2xl relative overflow-hidden group hover:border-cyan-500/50 transition duration-300&quot;&gt;</p>
-    <p>                    &lt;h3 class=&quot;text-2xl font-bold text-white mb-4 flex items-center gap-2&quot;&gt;</p>
-    <p>                        &lt;span&gt;⚡️&lt;/span&gt; &lt;span data-i18n=&quot;ai_energy_title&quot;&gt;AI 能源分析师&lt;/span&gt;</p>
-    <p>                    &lt;/h3&gt;</p>
-    <p>                    &lt;p class=&quot;text-gray-400 mb-6&quot; data-i18n=&quot;ai_energy_desc&quot;&gt;输入你的月用电量，预测在 2030 年它能换取多少 UBI 收益。&lt;/p&gt;</p>
-    <br>
-    <p>                    &lt;div class=&quot;flex flex-col gap-4 mb-6&quot;&gt;</p>
-    <p>                        &lt;input type=&quot;number&quot; id=&quot;energyUsage&quot; class=&quot;bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-400 transition placeholder-gray-500&quot;&gt;</p>
-    <p>                        &lt;button onclick=&quot;analyzeEnergy()&quot; class=&quot;bg-cyan-600 hover:bg-cyan-500 text-white font-bold px-6 py-3 rounded-lg transition-all w-full&quot; data-i18n=&quot;ai_energy_btn&quot;&gt;</p>
-    <p>                            生成财富报告</p>
-    <p>                        &lt;/button&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <br>
-    <p>                    &lt;div id=&quot;loading&quot; class=&quot;hidden text-center py-4&quot;&gt;</p>
-    <p>                        &lt;div class=&quot;inline-block animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-cyan-400 mb-2&quot;&gt;&lt;/div&gt;</p>
-    <p>                        &lt;p class=&quot;text-sm text-cyan-300&quot; id=&quot;loadingText&quot;&gt;&lt;/p&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <br>
-    <p>                    &lt;div id=&quot;analysisResult&quot; class=&quot;hidden bg-slate-800/50 rounded-lg p-4 border border-cyan-500/20 text-sm&quot;&gt;</p>
-    <p>                        &lt;p id=&quot;aiResponse&quot; class=&quot;text-gray-300 leading-relaxed&quot;&gt;&lt;/p&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <br>
-    <p>                &lt;!-- Career Simulator --&gt;</p>
-    <p>                &lt;div class=&quot;bg-black/40 border border-slate-700 rounded-2xl p-8 backdrop-blur-md shadow-2xl relative overflow-hidden group hover:border-purple-500/50 transition duration-300&quot;&gt;</p>
-    <p>                    &lt;h3 class=&quot;text-2xl font-bold text-white mb-4 flex items-center gap-2&quot;&gt;</p>
-    <p>                        &lt;span&gt;🔮&lt;/span&gt; &lt;span data-i18n=&quot;ai_career_title&quot;&gt;AGI 职业生存推演&lt;/span&gt;</p>
-    <p>                    &lt;/h3&gt;</p>
-    <p>                    &lt;p class=&quot;text-gray-400 mb-6&quot; data-i18n=&quot;ai_career_desc&quot;&gt;输入你现在的职业，AI 将计算其被取代的概率，并分析原因和给出建议。&lt;/p&gt;</p>
-    <br>
-    <p>                    &lt;div class=&quot;flex flex-col gap-4 mb-6&quot;&gt;</p>
-    <p>                        &lt;input type=&quot;text&quot; id=&quot;jobInput&quot; class=&quot;bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-400 transition placeholder-gray-500&quot;&gt;</p>
-    <p>                        &lt;button onclick=&quot;simulateFuture()&quot; class=&quot;bg-purple-600 hover:bg-purple-500 text-white font-bold px-6 py-3 rounded-lg transition-all w-full&quot; data-i18n=&quot;ai_career_btn&quot;&gt;</p>
-    <p>                            计算概率并分析</p>
-    <p>                        &lt;/button&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <br>
-    <p>                    &lt;div id=&quot;simLoading&quot; class=&quot;hidden text-center py-4&quot;&gt;</p>
-    <p>                        &lt;div class=&quot;inline-block animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-purple-400 mb-2&quot;&gt;&lt;/div&gt;</p>
-    <p>                        &lt;p class=&quot;text-sm text-purple-300&quot; id=&quot;simLoadingText&quot;&gt;&lt;/p&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <br>
-    <p>                    &lt;div id=&quot;simResult&quot; class=&quot;hidden bg-slate-800/50 rounded-lg p-4 border border-purple-500/20 text-sm&quot;&gt;</p>
-    <p>                        &lt;p id=&quot;simAiResponse&quot; class=&quot;text-gray-300 leading-relaxed&quot;&gt;&lt;/p&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>    &lt;/section&gt;</p>
-    <br>
-    <p>    &lt;!-- Core Features --&gt;</p>
-    <p>    &lt;section id=&quot;solution&quot; class=&quot;py-24&quot;&gt;</p>
-    <p>        &lt;div class=&quot;container mx-auto px-6&quot;&gt;</p>
-    <p>            &lt;div class=&quot;grid md:grid-cols-3 gap-8&quot;&gt;</p>
-    <p>                &lt;!-- Feature 1 --&gt;</p>
-    <p>                &lt;div class=&quot;bg-slate-900 p-8 rounded-xl border border-slate-800 hover:border-cyan-500/50 transition duration-300 group&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;w-14 h-14 bg-slate-800 rounded-lg flex items-center justify-center mb-6 group-hover:bg-cyan-900 transition&quot;&gt;</p>
-    <p>                        &lt;span class=&quot;text-3xl&quot;&gt;🤖&lt;/span&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                    &lt;h3 class=&quot;text-2xl font-bold mb-4&quot; data-i18n=&quot;feature_1_title&quot;&gt;AI 向人类纳税&lt;/h3&gt;</p>
-    <p>                    &lt;p class=&quot;text-gray-400 leading-relaxed&quot; data-i18n=&quot;feature_1_desc&quot;&gt;</p>
-    <p>                        在 EDT 协议中，算力中心消耗电力必须支付 EDT-U 代币。这创造了一个强制性的经济闭环，将机器产生的财富自动转移给人类。</p>
-    <p>                    &lt;/p&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <br>
-    <p>                &lt;!-- Feature 2 --&gt;</p>
-    <p>                &lt;div class=&quot;bg-slate-900 p-8 rounded-xl border border-slate-800 hover:border-cyan-500/50 transition duration-300 group&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;w-14 h-14 bg-slate-800 rounded-lg flex items-center justify-center mb-6 group-hover:bg-cyan-900 transition&quot;&gt;</p>
-    <p>                        &lt;span class=&quot;text-3xl&quot;&gt;🔒&lt;/span&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                    &lt;h3 class=&quot;text-2xl font-bold mb-4&quot; data-i18n=&quot;feature_2_title&quot;&gt;DePIN 物理锁&lt;/h3&gt;</p>
-    <p>                    &lt;p class=&quot;text-gray-400 leading-relaxed&quot; data-i18n=&quot;feature_2_desc&quot;&gt;</p>
-    <p>                        自主研发的智能能源网关 (SEG) 直接受链上合约控制。无支付，即断电。代码即法律，硬件即执法。</p>
-    <p>                    &lt;/p&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <br>
-    <p>                &lt;!-- Feature 3 --&gt;</p>
-    <p>                &lt;div class=&quot;bg-slate-900 p-8 rounded-xl border border-slate-800 hover:border-cyan-500/50 transition duration-300 group&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;w-14 h-14 bg-slate-800 rounded-lg flex items-center justify-center mb-6 group-hover:bg-cyan-900 transition&quot;&gt;</p>
-    <p>                        &lt;span class=&quot;text-3xl&quot;&gt;🌍&lt;/span&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                    &lt;h3 class=&quot;text-2xl font-bold mb-4&quot; data-i18n=&quot;feature_3_title&quot;&gt;全民基本收入 (UBI)&lt;/h3&gt;</p>
-    <p>                    &lt;p class=&quot;text-gray-400 leading-relaxed&quot; data-i18n=&quot;feature_3_desc&quot;&gt;</p>
-    <p>                        全球 20% 的能源产能将被锚定并代币化，作为生存保障免费分发给经过生物特征验证的真实人类。</p>
-    <p>                    &lt;/p&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>    &lt;/section&gt;</p>
-    <br>
-    <p>    &lt;!-- Tokenomics --&gt;</p>
-    <p>    &lt;section id=&quot;tokenomics&quot; class=&quot;py-20 bg-black relative&quot;&gt;</p>
-    <p>        &lt;div class=&quot;absolute inset-0 bg-[url(&#039;https://www.transparenttextures.com/patterns/dark-matter.png&#039;)] opacity-20&quot;&gt;&lt;/div&gt;</p>
-    <p>        &lt;div class=&quot;container mx-auto px-6 text-center relative z-10&quot;&gt;</p>
-    <p>            &lt;h2 class=&quot;text-4xl md:text-5xl font-bold mb-16 brand-font&quot;&gt;&lt;span class=&quot;text-cyan-400&quot;&gt;EDT&lt;/span&gt; &lt;span data-i18n=&quot;token_title&quot;&gt;代币分配&lt;/span&gt;&lt;/h2&gt;</p>
-    <br>
-    <p>            &lt;div class=&quot;grid md:grid-cols-4 gap-8&quot;&gt;</p>
-    <p>                &lt;div class=&quot;p-6&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;text-5xl font-black text-white mb-2&quot;&gt;50%&lt;/div&gt;</p>
-    <p>                    &lt;div class=&quot;text-cyan-400 uppercase tracking-wider text-sm font-bold&quot; data-i18n=&quot;token_item_1&quot;&gt;全球 UBI 储备池&lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>                &lt;div class=&quot;p-6 border-l border-slate-800&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;text-5xl font-black text-white mb-2&quot;&gt;35%&lt;/div&gt;</p>
-    <p>                    &lt;div class=&quot;text-cyan-400 uppercase tracking-wider text-sm font-bold&quot; data-i18n=&quot;token_item_2&quot;&gt;公平发射 &amp; 流动性&lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>                &lt;div class=&quot;p-6 border-l border-slate-800&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;text-5xl font-black text-white mb-2&quot;&gt;5%&lt;/div&gt;</p>
-    <p>                    &lt;div class=&quot;text-cyan-400 uppercase tracking-wider text-sm font-bold&quot; data-i18n=&quot;token_item_3&quot;&gt;创世空投&lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>                &lt;div class=&quot;p-6 border-l border-slate-800&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;text-5xl font-black text-white mb-2&quot;&gt;10%&lt;/div&gt;</p>
-    <p>                    &lt;div class=&quot;text-cyan-400 uppercase tracking-wider text-sm font-bold&quot; data-i18n=&quot;token_item_4&quot;&gt;生态 &amp; 团队&lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>    &lt;/section&gt;</p>
-    <br>
-    <p>    &lt;!-- Roadmap --&gt;</p>
-    <p>    &lt;section id=&quot;roadmap&quot; class=&quot;py-24&quot;&gt;</p>
-    <p>        &lt;div class=&quot;container mx-auto px-6 max-w-4xl&quot;&gt;</p>
-    <p>            &lt;h2 class=&quot;text-4xl font-bold mb-12 text-center&quot; data-i18n=&quot;roadmap_title&quot;&gt;通往 2035 的路线图&lt;/h2&gt;</p>
-    <br>
-    <p>            &lt;div class=&quot;space-y-8&quot;&gt;</p>
-    <p>                &lt;!-- Phase 1 --&gt;</p>
-    <p>                &lt;div class=&quot;flex group&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;flex-shrink-0 mr-6 flex flex-col items-center&quot;&gt;</p>
-    <p>                        &lt;div class=&quot;w-8 h-8 rounded-full bg-cyan-500 border-4 border-black group-hover:scale-110 transition&quot;&gt;&lt;/div&gt;</p>
-    <p>                        &lt;div class=&quot;h-full w-0.5 bg-slate-700 my-2&quot;&gt;&lt;/div&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                    &lt;div class=&quot;pb-8&quot;&gt;</p>
-    <p>                        &lt;span class=&quot;text-cyan-400 font-bold text-sm tracking-widest&quot; data-i18n=&quot;phase_1_tag&quot;&gt;PHASE 1 (NOW)&lt;/span&gt;</p>
-    <p>                        &lt;h3 class=&quot;text-2xl font-bold text-white mt-1 mb-2&quot; data-i18n=&quot;phase_1_title&quot;&gt;创世与共识&lt;/h3&gt;</p>
-    <p>                        &lt;p class=&quot;text-gray-400&quot; data-i18n=&quot;phase_1_desc&quot;&gt;发布白皮书 v1.0，启动 Discord 社区，发行 &quot;EDT Genesis Pass&quot; NFT 完成种子轮融资。&lt;/p&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <br>
-    <p>                &lt;!-- Phase 2 --&gt;</p>
-    <p>                &lt;div class=&quot;flex group&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;flex-shrink-0 mr-6 flex flex-col items-center&quot;&gt;</p>
-    <p>                        &lt;div class=&quot;w-8 h-8 rounded-full bg-slate-700 border-4 border-black group-hover:bg-cyan-900 transition&quot;&gt;&lt;/div&gt;</p>
-    <p>                        &lt;div class=&quot;h-full w-0.5 bg-slate-700 my-2&quot;&gt;&lt;/div&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                    &lt;div class=&quot;pb-8&quot;&gt;</p>
-    <p>                        &lt;span class=&quot;text-gray-500 font-bold text-sm tracking-widest&quot; data-i18n=&quot;phase_2_tag&quot;&gt;PHASE 2 (Q2 2026)&lt;/span&gt;</p>
-    <p>                        &lt;h3 class=&quot;text-2xl font-bold text-gray-300 mt-1 mb-2&quot; data-i18n=&quot;phase_2_title&quot;&gt;代币与流动性&lt;/h3&gt;</p>
-    <p>                        &lt;p class=&quot;text-gray-500&quot; data-i18n=&quot;phase_2_desc&quot;&gt;代币生成事件 (TGE)，Solana 公平发射，上线 Raydium，启动硬件预购。&lt;/p&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <br>
-    <p>                &lt;!-- Phase 3 --&gt;</p>
-    <p>                &lt;div class=&quot;flex group&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;flex-shrink-0 mr-6 flex flex-col items-center&quot;&gt;</p>
-    <p>                        &lt;div class=&quot;w-8 h-8 rounded-full bg-slate-700 border-4 border-black group-hover:bg-cyan-900 transition&quot;&gt;&lt;/div&gt;</p>
-    <p>                        &lt;!-- Last item has no line --&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                    &lt;div&gt;</p>
-    <p>                        &lt;span class=&quot;text-gray-500 font-bold text-sm tracking-widest&quot; data-i18n=&quot;phase_3_tag&quot;&gt;PHASE 3 (2027+)&lt;/span&gt;</p>
-    <p>                        &lt;h3 class=&quot;text-2xl font-bold text-gray-300 mt-1 mb-2&quot; data-i18n=&quot;phase_3_title&quot;&gt;物理网络落地&lt;/h3&gt;</p>
-    <p>                        &lt;p class=&quot;text-gray-500&quot; data-i18n=&quot;phase_3_desc&quot;&gt;智能能源网关 (SEG) 量产发货，主网 Beta 上线，UBI 开始分发。&lt;/p&gt;</p>
-    <p>                    &lt;/div&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>    &lt;/section&gt;</p>
-    <br>
-    <p>    &lt;!-- Join Team --&gt;</p>
-    <p>    &lt;section id=&quot;join&quot; class=&quot;py-20 bg-slate-900 border-t border-slate-800&quot;&gt;</p>
-    <p>        &lt;div class=&quot;container mx-auto px-6 text-center&quot;&gt;</p>
-    <p>            &lt;h2 class=&quot;text-4xl font-bold mb-6 text-white&quot; data-i18n=&quot;join_title&quot;&gt;加入我们的团队&lt;/h2&gt;</p>
-    <p>            &lt;p class=&quot;text-xl text-gray-400 max-w-2xl mx-auto mb-12&quot; data-i18n=&quot;join_desc&quot;&gt;</p>
-    <p>                我们正在寻找充满激情的建设者，共同构建 AGI 时代的能源基础设施。&lt;br&gt;无论你是开发者、工程师还是创作者，EDT 都需要你。</p>
-    <p>            &lt;/p&gt;</p>
-    <br>
-    <p>            &lt;div class=&quot;grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12&quot;&gt;</p>
-    <p>                &lt;div class=&quot;bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-cyan-500 transition&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;text-3xl mb-4&quot;&gt;💻&lt;/div&gt;</p>
-    <p>                    &lt;h3 class=&quot;text-xl font-bold text-white&quot; data-i18n=&quot;join_role_1&quot;&gt;区块链开发工程师&lt;/h3&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>                &lt;div class=&quot;bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-cyan-500 transition&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;text-3xl mb-4&quot;&gt;🔌&lt;/div&gt;</p>
-    <p>                    &lt;h3 class=&quot;text-xl font-bold text-white&quot; data-i18n=&quot;join_role_2&quot;&gt;嵌入式硬件工程师&lt;/h3&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>                &lt;div class=&quot;bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-cyan-500 transition&quot;&gt;</p>
-    <p>                    &lt;div class=&quot;text-3xl mb-4&quot;&gt;📣&lt;/div&gt;</p>
-    <p>                    &lt;h3 class=&quot;text-xl font-bold text-white&quot; data-i18n=&quot;join_role_3&quot;&gt;社区布道者&lt;/h3&gt;</p>
-    <p>                &lt;/div&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <br>
-    <p>            &lt;!-- Join Team Contact --&gt;</p>
-    <p>            &lt;div class=&quot;flex flex-col items-center&quot;&gt;</p>
-    <p>                &lt;a href=&quot;mailto:electrodemocracygroup@gmail.com&quot; class=&quot;btn-primary px-10 py-4 rounded text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform&quot;&gt;</p>
-    <p>                    &lt;span data-i18n=&quot;join_btn&quot;&gt;发送简历&lt;/span&gt;</p>
-    <p>                    &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; class=&quot;h-5 w-5&quot; viewBox=&quot;0 0 20 20&quot; fill=&quot;currentColor&quot;&gt;</p>
-    <p>                        &lt;path d=&quot;M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z&quot; /&gt;</p>
-    <p>                        &lt;path d=&quot;M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z&quot; /&gt;</p>
-    <p>                    &lt;/svg&gt;</p>
-    <p>                &lt;/a&gt;</p>
-    <p>                &lt;p class=&quot;mt-4 text-cyan-400 font-mono text-lg&quot;&gt;electrodemocracygroup@gmail.com&lt;/p&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>    &lt;/section&gt;</p>
-    <br>
-    <p>    &lt;!-- Footer --&gt;</p>
-    <p>    &lt;footer class=&quot;bg-black py-12 border-t border-slate-900&quot;&gt;</p>
-    <p>        &lt;div class=&quot;container mx-auto px-6 text-center&quot;&gt;</p>
-    <p>            &lt;h2 class=&quot;text-3xl md:text-4xl font-black mb-8 brand-font&quot;&gt;&lt;span data-i18n=&quot;footer_slogan_1&quot;&gt;SOVEREIGNTY IS NOT GIVEN,&lt;/span&gt; &lt;br&gt; &lt;span class=&quot;text-cyan-500&quot; data-i18n=&quot;footer_slogan_2&quot;&gt;IT IS POWERED.&lt;/span&gt;&lt;/h2&gt;</p>
-    <br>
-    <p>            &lt;div class=&quot;flex justify-center space-x-8 mb-8&quot;&gt;</p>
-    <p>                &lt;!-- Twitter --&gt;</p>
-    <p>                &lt;a href=&quot;https://x.com/electrodegroup&quot; target=&quot;_blank&quot; class=&quot;text-gray-400 hover:text-white transition flex items-center gap-2&quot;&gt;</p>
-    <p>                    &lt;svg class=&quot;w-5 h-5&quot; fill=&quot;currentColor&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;</p>
-    <p>                    &lt;span&gt;Twitter (X)&lt;/span&gt;</p>
-    <p>                &lt;/a&gt;</p>
-    <br>
-    <p>                &lt;!-- LinkedIn (NEW) --&gt;</p>
-    <p>                &lt;a href=&quot;https://linkedin.com/in/democray-electro-ab8403361&quot; target=&quot;_blank&quot; class=&quot;text-gray-400 hover:text-white transition flex items-center gap-2&quot;&gt;</p>
-    <p>                    &lt;svg class=&quot;w-5 h-5&quot; fill=&quot;currentColor&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z&quot; clip-rule=&quot;evenodd&quot;&gt;&lt;/path&gt;&lt;/svg&gt;</p>
-    <p>                    &lt;span&gt;LinkedIn&lt;/span&gt;</p>
-    <p>                &lt;/a&gt;</p>
-    <p>            &lt;/div&gt;</p>
-    <br>
-    <p>            &lt;p class=&quot;text-gray-600 text-sm&quot; data-i18n=&quot;footer_copyright&quot;&gt;</p>
-    <p>                © 2025 ElectroDemocracy DAO. All rights reserved. &lt;br&gt;</p>
-    <p>                投资加密资产涉及风险，请参阅白皮书中的免责声明。</p>
-    <p>            &lt;/p&gt;</p>
-    <p>        &lt;/div&gt;</p>
-    <p>    &lt;/footer&gt;</p>
-    <br>
-    <p>&lt;/body&gt;</p>
-    <p>&lt;/html&gt;</p>
-</body>
-</html>
